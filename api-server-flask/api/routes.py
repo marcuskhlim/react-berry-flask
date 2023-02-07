@@ -17,6 +17,11 @@ from .config import BaseConfig
 
 rest_api = Api(version="1.0", title="Users API")
 
+import logging
+
+logging.basicConfig(level='DEBUG')
+logging.info("HERE 1")
+
 
 """
     Flask-Restx models for api request and response data
@@ -182,6 +187,9 @@ class LogoutUser(Resource):
 
     @token_required
     def post(self, current_user):
+        #rest_api.logger.info("log out called")
+        #print('log out called')
+        logging.info("log out called")
 
         _jwt_token = request.headers["authorization"]
 
