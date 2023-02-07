@@ -4,7 +4,11 @@ services:
     container_name: flask_api
     restart: always
     env_file: .env
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/app'
     networks:
       - db_network
       - web_network

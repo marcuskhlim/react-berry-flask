@@ -189,7 +189,7 @@ class LogoutUser(Resource):
     def post(self):
         #rest_api.logger.info("log out called")
         #print('log out called')
-        logging.info("log out called")
+        logging.info("log out called!!!")
 
         _jwt_token = request.headers["authorization"]
 
