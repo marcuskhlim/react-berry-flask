@@ -185,8 +185,8 @@ class LogoutUser(Resource):
        Logs out User using 'logout_model' input
     """
 
-    @token_required
-    def post(self, current_user):
+
+    def post(self):
         #rest_api.logger.info("log out called")
         #print('log out called')
         logging.info("log out called")
@@ -196,7 +196,7 @@ class LogoutUser(Resource):
         jwt_block = JWTTokenBlocklist(jwt_token=_jwt_token, created_at=datetime.now(timezone.utc))
         jwt_block.save()
 
-        self.set_jwt_auth_active(False)
-        self.save()
+        #self.set_jwt_auth_active(False)
+        #self.save()
 
         return {"success": True}, 200
