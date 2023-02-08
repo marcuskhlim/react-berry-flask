@@ -8,14 +8,20 @@ import json
 from flask import Flask
 from flask_cors import CORS
 
-from .routes import rest_api
+from .routes import rest_api as ns1
+from .openai import rest_api as ns2
 from .models import db
+from flask_restx import Api
 
 app = Flask(__name__)
 
 app.config.from_object('api.config.BaseConfig')
 
 db.init_app(app)
+
+rest_api = Api(version="1.0", title="API")
+rest_api.add_namespace(ns1, path='/api/users')
+rest_api.add_namespace(ns2, path='/api/openai')
 rest_api.init_app(app)
 CORS(app)
 

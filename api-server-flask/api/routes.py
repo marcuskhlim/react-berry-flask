@@ -8,14 +8,17 @@ from datetime import datetime, timezone, timedelta
 from functools import wraps
 
 from flask import request
-from flask_restx import Api, Resource, fields
+from flask_restx import Api, Resource, fields, Namespace
 
 import jwt
 
 from .models import db, Users, JWTTokenBlocklist
 from .config import BaseConfig
 
-rest_api = Api(version="1.0", title="Users API")
+#rest_api = Api(version="1.0", title="Users API")
+rest_api = Namespace('users', description='User related operations')
+
+from .jwt import token_required
 
 import logging
 
@@ -43,52 +46,11 @@ user_edit_model = rest_api.model('UserEditModel', {"userID": fields.String(requi
 
 
 """
-   Helper function for JWT token required
-"""
-
-def token_required(f):
-
-    @wraps(f)
-    def decorator(*args, **kwargs):
-
-        token = None
-
-        if "authorization" in request.headers:
-            token = request.headers["authorization"]
-
-        if not token:
-            return {"success": False, "msg": "Valid JWT token is missing"}, 400
-
-        try:
-            data = jwt.decode(token, BaseConfig.SECRET_KEY, algorithms=["HS256"])
-            current_user = Users.get_by_email(data["email"])
-
-            if not current_user:
-                return {"success": False,
-                        "msg": "Sorry. Wrong auth token. This user does not exist."}, 400
-
-            token_expired = db.session.query(JWTTokenBlocklist.id).filter_by(jwt_token=token).scalar()
-
-            if token_expired is not None:
-                return {"success": False, "msg": "Token revoked."}, 400
-
-            if not current_user.check_jwt_auth_active():
-                return {"success": False, "msg": "Token expired."}, 400
-
-        except:
-            return {"success": False, "msg": "Token is invalid"}, 400
-
-        return f(current_user, *args, **kwargs)
-
-    return decorator
-
-
-"""
     Flask-Restx routes
 """
 
 
-@rest_api.route('/api/users/register')
+@rest_api.route('/register')
 class Register(Resource):
     """
        Creates a new user by taking 'signup_model' input
@@ -118,7 +80,7 @@ class Register(Resource):
                 "msg": "The user was successfully registered"}, 200
 
 
-@rest_api.route('/api/users/login')
+@rest_api.route('/login')
 class Login(Resource):
     """
        Login user by taking 'login_model' input and return JWT token
@@ -153,7 +115,7 @@ class Login(Resource):
                 "user": user_exists.toJSON()}, 200
 
 
-@rest_api.route('/api/users/edit')
+@rest_api.route('/edit')
 class EditUser(Resource):
     """
        Edits User's username or password or both using 'user_edit_model' input
@@ -179,7 +141,7 @@ class EditUser(Resource):
         return {"success": True}, 200
 
 
-@rest_api.route('/api/users/logout')
+@rest_api.route('/logout')
 class LogoutUser(Resource):
     """
        Logs out User using 'logout_model' input
@@ -189,7 +151,7 @@ class LogoutUser(Resource):
     def post(self):
         #rest_api.logger.info("log out called")
         #print('log out called')
-        logging.info("log out called")
+        logging.info("log out called!")
 
         _jwt_token = request.headers["authorization"]
 
