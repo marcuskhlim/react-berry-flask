@@ -37,5 +37,5 @@ def default_route():
     return jsonify('hello world')
 
 if __name__ == '__main__':
-    app.logger.info('FLASK APP starting...')
+    logging.info('FLASK APP starting...')
     app.run(debug=True, host="0.0.0.0")
