@@ -23,7 +23,7 @@ const SamplePage = Loadable(lazy(() => import('../views/sample-page')));
 
 const MainRoutes = () => {
     const location = useLocation();
-
+    console.log("MainRoutes...!");
     return (
         <Route
             path={[
