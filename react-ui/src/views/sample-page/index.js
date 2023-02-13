@@ -12,6 +12,10 @@ import TextBox from '../../ui-component/TextBox';
 //import './styles.scss';
 import { postGenerateTextEndpoint } from '../../utils/async';
 
+import configData from '../../config';
+
+import axios from 'axios';
+
 
 //==============================|| SAMPLE PAGE ||==============================//
 

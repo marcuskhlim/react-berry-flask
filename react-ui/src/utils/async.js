@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios';
+import configData from '../../config';
 
-const ENDPOINT_URL = "http://localhost:5000/generate";
+const ENDPOINT_URL = configData.API_SERVER + '/openai';
 
 const useAsyncEndpoint = fn => {
     const [res, setRes] = React.useState({ data: null, complete: false, pending: false, error: false });

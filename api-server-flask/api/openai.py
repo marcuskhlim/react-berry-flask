@@ -1,3 +1,5 @@
+from .aicontent import openAIQuery
+
 from flask import request
 from flask_restx import Api, Resource, fields, Namespace
 
@@ -10,22 +12,22 @@ rest_api = Namespace('openai', description='OpenAI related operations')
 import logging
 
 logging.basicConfig(level='DEBUG')
-logging.info("HERE 2")
+logging.info("HERE 7")
 
 
-cat = rest_api.model('Cat', {
-    'id': fields.String(required=True, description='The cat identifier'),
-    'name': fields.String(required=True, description='The cat name'),
+cold_email_model = rest_api.model('ColdEmailModel', {
+    'submission': fields.String(required=True, description='The user submission')
 })
 
-CATS = [
-    {'id': 'felix', 'name': 'Felix'},
-]
-
-@rest_api.route('/')
-class CatList(Resource):
-    @rest_api.doc('list_cats')
-    @rest_api.marshal_list_with(cat)
-    def get(self):
-        '''List all cats'''
-        return CATS
+@rest_api.route('/cold-emails')
+class ColdEmails(Resource):
+    
+    @rest_api.expect(cold_email_model, validate=True)
+    def post(self):
+        req_data = request.get_json()
+        submission = req_data.get("submission")
+        logging.info('cold emails called...{}'.format(submission))
+        query = "Write a cold email to potential clients about: {}".format(submission)
+        openAIAnswerUnformatted = openAIQuery(query)
+        openAIAnswer = openAIAnswerUnformatted.replace('\n', '<br>')
+        return {'result': openAIAnswer},200;
