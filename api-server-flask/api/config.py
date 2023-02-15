@@ -16,4 +16,5 @@ class BaseConfig():
     SECRET_KEY = "flask-app-secret-key-change-it"
     JWT_SECRET_KEY = "jwt-app-secret-key-change-it"
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=1)
-    OPENAI_API_KEY = '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'
+    #OPENAI_API_KEY = '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'
+    OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
