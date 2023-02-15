@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import configData from '../../config';
+import configData from '../config';
 
 const ENDPOINT_URL = configData.API_SERVER + '/openai';
 
