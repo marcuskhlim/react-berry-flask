@@ -90,7 +90,6 @@ const MainLayout = ({ children }) => {
 
     React.useEffect(() => {
         dispatch({ type: SET_MENU, opened: !matchDownMd });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [matchDownMd]);
 
     return (
