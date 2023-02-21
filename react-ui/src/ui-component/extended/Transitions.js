@@ -6,6 +6,7 @@ import { Box, Collapse, Fade, Grow, Slide, Zoom } from '@material-ui/core';
 
 //-----------------------|| TRANSITIONS ||-----------------------//
 
+// eslint-disable-next-line react/display-name
 const Transitions = React.forwardRef(({ children, position, type, direction, ...others }, ref) => {
     let positionSX = {
         transformOrigin: '0 0 0'

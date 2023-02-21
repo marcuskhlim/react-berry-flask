@@ -6,6 +6,7 @@ import { motion, useCycle } from 'framer-motion';
 
 //-----------------------|| ANIMATION BUTTON ||-----------------------//
 
+// eslint-disable-next-line react/display-name
 const AnimateButton = React.forwardRef(({ children, type, direction, offset, scale }, ref) => {
     let offset1;
     let offset2;

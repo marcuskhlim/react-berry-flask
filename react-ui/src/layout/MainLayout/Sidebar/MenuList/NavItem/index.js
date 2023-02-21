@@ -73,6 +73,7 @@ const NavItem = ({ item, level }) => {
         itemTarget = '_blank';
     }
 
+    // eslint-disable-next-line react/display-name
     let listItemProps = { component: React.forwardRef((props, ref) => <Link {...props} to={item.url} />) };
     if (item.external) {
         listItemProps = { component: 'a', href: item.url };

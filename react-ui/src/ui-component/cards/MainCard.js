@@ -12,6 +12,7 @@ const headerSX = {
 
 //-----------------------|| CUSTOM MAIN CARD ||-----------------------//
 
+// eslint-disable-next-line react/display-name
 const MainCard = React.forwardRef(
     (
         {
