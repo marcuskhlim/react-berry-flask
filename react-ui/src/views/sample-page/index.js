@@ -9,7 +9,7 @@ import MainCard from '../../ui-component/cards/MainCard';
 import Button from '../../ui-component/Button';
 import SelectBox from '../../ui-component/SelectBox';
 import TextBox from '../../ui-component/TextBox';
-//import './styles.scss';
+
 import { postGenerateTextEndpoint } from '../../utils/async';
 
 import configData from '../../config';
@@ -22,7 +22,7 @@ import axios from 'axios';
 const SamplePage = () => {
   const [text, setText] = useState("");
   const [model, setModel] = useState('gpt2');
-  const [generatedText, postGenerateText] = postGenerateTextEndpoint();
+  const [generatedText, postGenerateText] = postGenerateTextEndpoint('cold-emails');
 
   const generateText = () => {
     postGenerateText({ text, model, userId: 1 });
@@ -39,7 +39,7 @@ const SamplePage = () => {
 
         */}
 
-              <form noValidate autoComplete='off'>
+              <form className="aiform" noValidate autoComplete='off'>
         <h1>React GPT</h1>
         <SelectBox model={model} setModel={setModel} />
         <TextBox text={text} setText={setText} />
